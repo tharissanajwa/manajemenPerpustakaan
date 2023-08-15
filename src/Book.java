@@ -7,6 +7,8 @@ public class Book {
     private int jumlah;
     private String statusBuku;
 
+    private String idAnggota;
+
     // Fungsinya untuk menambahkan data ke database
     public Book(String judul, String penulis, String isbn, int jumlah, String statusBuku) {
         this.judul = judul;
@@ -43,5 +45,13 @@ public class Book {
 
     public void setStatusBuku(String statusBuku) {
         this.statusBuku = statusBuku;
+    }
+
+    public String getIdAnggota() {
+        return idAnggota;
+    }
+
+    public void setIdAnggota(String idAnggota) {
+        this.idAnggota = idAnggota;
     }
 }

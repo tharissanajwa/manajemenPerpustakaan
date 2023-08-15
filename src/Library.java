@@ -61,7 +61,7 @@ public class Library {
                             }
                             case 3 -> {
                                 System.out.println("Anda memilih menu untuk mengembalikan buku. Berikut list buku yang sedang dipinjam : ");
-                                pengembalianBuku(scanner, books, history); // Memangil fungsi pengembalian buku
+                                pengembalianBuku(scanner, books, history, member); // Memangil fungsi pengembalian buku
                             }
                             case 4 -> {
                                 System.out.println("Anda memilih menu untuk menghapus buku. Berikut list buku yang tersedia : ");
@@ -79,7 +79,7 @@ public class Library {
                                         }
                                         case 2 -> {
                                             System.out.println("Anda memilih menu untuk melihat buku yang dipinjam. Berikut datanya : ");
-                                            listBukuPinjam(books); // Memanggil fungsi lihat data buku yang sedang dipinjam
+                                            listBukuPinjam(books, member); // Memanggil fungsi lihat data buku yang sedang dipinjam
                                         }
                                         case 3 -> {
                                             System.out.println("Anda memilih menu untuk melihat jumlah buku yang teserdia. Berikut datanya : ");
@@ -234,9 +234,9 @@ public class Library {
         }
     }
     // Fungsi untuk menampilkan semua buku yang sedang dipinjam
-    private static void listBukuPinjam(List<Book> books) {
+    private static void listBukuPinjam(List<Book> books, List<Anggota> member) {
         boolean dataExist = false; // Setel awalnya ke false karena belum ada data yang ditemukan
-        System.out.println("No\tJudul\t\t\t\t\t\t\t\t\t\t\t\t|Penulis\t\t\t\t\t\t\t\t|ISBN");
+        System.out.println("No\tJudul\t\t\t\t\t\t\t\t|Penulis\t\t\t\t\t\t|ISBN\t\t\t\t\t\t\t|Peminjam");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
         for (int indeksBuku = 0; indeksBuku < books.size(); indeksBuku++) {
             String judul = books.get(indeksBuku).getJudul();
@@ -244,11 +244,16 @@ public class Library {
             String isbn = books.get(indeksBuku).getIsbn();
             String statusBuku = books.get(indeksBuku).getStatusBuku();
             int jumlah = books.get(indeksBuku).getJumlah();
-            // Fungsinya hanya untuk menampilkan data yang tidak terhapus(aktif) dan buku yang sedang dipinjam(0)
-            if (statusBuku.equalsIgnoreCase("aktif")) {
-                if (jumlah == 0) {
-                    System.out.printf("%d.\t%s\t\t\t\t\t\t\t\t|%s\t\t\t\t\t\t\t|%s\n", indeksBuku + 1, judul, penulis, isbn);
-                    dataExist = true; // Bila data ditemukan, maka akan diset nilainya menjadi true
+            for (int indeksMember = 0; indeksMember < member.size(); indeksMember++) { // Looping member untuk mengambil nama peminjam
+                if (books.get(indeksBuku).getIdAnggota() != null && books.get(indeksBuku).getIdAnggota().equalsIgnoreCase(member.get(indeksMember).getIdAnggota())) {
+                    String namaMember = member.get(indeksMember).getNama(); // Ambil nama peminjam
+                    // Fungsinya hanya untuk menampilkan data yang tidak terhapus(aktif) dan buku yang sedang dipinjam(0)
+                    if (statusBuku.equalsIgnoreCase("aktif")) {
+                        if (jumlah == 0) {
+                            System.out.printf("%d.\t%s\t\t\t\t|%s\t\t\t\t\t|%s\t\t\t\t|%s\n", indeksBuku + 1, judul, penulis, isbn, namaMember);
+                            dataExist = true; // Bila data ditemukan, maka akan diset nilainya menjadi true
+                        }
+                    }
                 }
             }
         }
@@ -594,6 +599,8 @@ public class Library {
                                                 for (int indeksMember = 0; indeksMember < member.size(); indeksMember++) {
                                                     if (idAnggota.equalsIgnoreCase(member.get(indeksMember).getIdAnggota())) {
                                                         String namaMember = member.get(indeksMember).getNama();
+                                                        String members = member.get(indeksMember).getIdAnggota();
+                                                        books.get(indeksBuku).setIdAnggota(members); // Set idAnggota peminjam pada database buku
                                                         // Menambahkan history bahwa buku dipinjamkan
                                                         history.add("Buku " + judul + " sedang dipinjam oleh " + namaMember + " di tanggal " + formatWaktu() + ".");
                                                         break;
@@ -629,10 +636,10 @@ public class Library {
         }
     }
     // Fungsinya untuk mengembalikan buku di perpustakaan
-    private static void pengembalianBuku(Scanner scanner, List<Book> books, List<String> history) {
+    private static void pengembalianBuku(Scanner scanner, List<Book> books, List<String> history, List<Anggota> member) {
         boolean loopKembali = false;
         while (!loopKembali) { // Looping untuk pengembalian buku lagi
-            listBukuPinjam(books); // Memanggil fungsi lihat buku yang dipinjam
+            listBukuPinjam(books, member); // Memanggil fungsi lihat buku yang dipinjam
             boolean isbnValid = false;
             while (!isbnValid) { // Looping untuk inputan isbn buku
                 System.out.print("Silahkan inputkan ISBN buku yang ingin dipinjam(hanya angka) : ");
