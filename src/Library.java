@@ -2,33 +2,36 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+// Class untuk menjalankan program dan controller semua ada disini
 public class Library {
+    // Fungsi untuk menambahkan data buku baru ke model dengan menginputkan semua variabel
     public static List<Book> tambahBuku(List<Book> books, String judul, String penulis, String isbn, int jumlah, String statusBuku) {
         books.add(new Book(judul, penulis, isbn, jumlah, statusBuku));
         return books;
     }
-
+    // Fungsi untuk menambahkan anggota baru ke model dengan menginputkan semua variabel
     public static List<Anggota> tambahAnggota(List<Anggota> member, String idAnggota, String nama, String statusAnggota) {
         member.add(new Anggota(idAnggota, nama, statusAnggota));
         return member;
     }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<Book> books = new ArrayList<>();
+    // Untuk menjalankan program utama di main
+    public static void main() {
+        Scanner scanner = new Scanner(System.in); // Mengambil class scanner untuk input teks pengguna
+        List<Book> books = new ArrayList<>(); // Inisialisasi struktur data untuk menyimpan informasi buku
+        // Membuat data sample tambah buku
         books.add(new Book("Menanti Hari Berganti", "Titi Sanaria", "978-623-5592-06-0", 1, "aktif"));
         books.add(new Book("Sunset Bersama Rosie", "Tere Liye Dar", "978-623-9607-46-3", 1, "aktif"));
         books.add(new Book("Hujan di Hari Minggu", "Tere Liye Dar", "978-602-0324-78-4", 1, "aktif"));
         books.add(new Book("Mariposa Angan Angan", "Luluk Fajriya", "978-602-5508-61-5", 1, "aktif"));
-
+        // Membuat data sample tambah anggota
         List<Anggota> member = new ArrayList<>();
         member.add(new Anggota("THA1", "Tharissa Najwa", "aktif"));
         member.add(new Anggota("PUT2", "Putri Budiman", "aktif"));
         member.add(new Anggota("ATH3", "Athifa Rasya P", "aktif"));
 
-        List<String> history = new ArrayList<>();
-        // Menampilkan pesan selamat datang
-        System.out.println("Selamat Datang di Manajemen Perpustakaan Tharissa!");
+        List<String> history = new ArrayList<>(); // Inisialisasi struktur data untuk menyimpan history buku
+
+        System.out.println("Selamat Datang di Manajemen Perpustakaan Tharissa!"); // Menampilkan pesan selamat datang
 
         // Looping menu utama
         boolean loopingMenu = true;
@@ -40,17 +43,17 @@ public class Library {
 
             switch (pilihanUser) {
                 // Menggunakan switch-case untuk menangani pilihan pengguna
-                // Case 1 untuk memilih menu buku
+                // Case 1 untuk memilih menu amanjemen buku
                 case 1 -> {
                     boolean loopingBuku = true;
                     while (loopingBuku) {
-                        tampilkanBuku();
+                        tampilkanBuku(); // Menampilkan menu buku
                         int pilihanMenuKategoriBuku = getPilihanUser(scanner);
-                        // Menangani pilihan switch case user dengan switch case lagi
+                        // Menangani pilihan switch case pengguna dengan switch case lagi
                         switch (pilihanMenuKategoriBuku) {
                             case 1 -> {
                                 System.out.println("Anda memilih menu untuk menambahkan buku baru.");
-                                tambahBukuBaru(scanner, books); // Memanggil fungsi tambah kategori baru dengan menyertakan scanner beserta arrayList nya(data set barang dan stok)
+                                tambahBukuBaru(scanner, books); // Memanggil fungsi tambah buku baru dengan menyertakan scanner beserta arrayList nya(data set barang dan stok)
                             }
                             case 2 -> {
                                 System.out.println("Anda memilih menu untuk meminjam buku. Berikut list buku yang tersedia : ");
@@ -58,7 +61,7 @@ public class Library {
                             }
                             case 3 -> {
                                 System.out.println("Anda memilih menu untuk mengembalikan buku. Berikut list buku yang sedang dipinjam : ");
-                                pengembalianBuku(scanner, books, history); // Memangil fungsi pinjam buku
+                                pengembalianBuku(scanner, books, history); // Memangil fungsi pengembalian buku
                             }
                             case 4 -> {
                                 System.out.println("Anda memilih menu untuk menghapus buku. Berikut list buku yang tersedia : ");
@@ -67,46 +70,42 @@ public class Library {
                             case 5 -> {
                                 boolean loopingLihatBuku = false;
                                 while (!loopingLihatBuku) {
-                                    tampilkanLihatBuku();
+                                    tampilkanLihatBuku(); // Menampilkan menu lihat buku
                                     int pilihanMenuLihatBuku = getPilihanUser(scanner);
-
                                     switch (pilihanMenuLihatBuku) {
                                         case 1 -> {
                                             System.out.println("Anda memilih menu untuk melihat buku yang tersedia. Berikut datanya : ");
-                                            listBuku(books); // Memanggil fungsi lihat kategori
+                                            listBuku(books); // Memanggil fungsi lihat semua buku
                                         }
                                         case 2 -> {
                                             System.out.println("Anda memilih menu untuk melihat buku yang dipinjam. Berikut datanya : ");
-                                            listBukuPinjam(books); // Memanggil fungsi lihat kategori
+                                            listBukuPinjam(books); // Memanggil fungsi lihat data buku yang sedang dipinjam
                                         }
                                         case 3 -> {
                                             System.out.println("Anda memilih menu untuk melihat jumlah buku yang teserdia. Berikut datanya : ");
-                                            listJumlahBuku(books); // Memanggil fungsi lihat kategori
+                                            listJumlahBuku(books); // Memanggil fungsi lihat buku beserta jumlahnya berdasarkan nama
                                         }
                                         case 4 -> {
                                             System.out.println("Anda memilih menu untuk melihat history buku. Berikut datanya : ");
-                                            historyBook(history); // Memanggil fungsi lihat kategori
+                                            historyBook(history); // Memanggil fungsi lihat history keluar masuk buku
                                         }
-                                        case 0 -> loopingLihatBuku = true;
-                                        case -1 -> {
+                                        case 0 -> loopingLihatBuku = true; // Memberhentikan looping menu lihat buku
+                                        case -1 -> { // Bila inputan pengguna selain angka, maka akan menghasilkan nilai -1
                                             System.out.println("Maaf! Input pilihan user harus berupa angka! Untuk mencoba lagi, silahkan tekan enter.");
                                             scanner.nextLine(); // Fungsinya untuk menghapus buffer
                                         }
-                                        // Menampilkan pesan kesalahan untuk pilihan yang tidak valid misal angka 5 keatas
-                                        default -> {
+                                        default -> { // Menampilkan pesan kesalahan untuk pilihan yang tidak valid misal angka 5 keatas
                                             System.out.println("Maaf menu, tidak tersedia, silahkan tekan enter untuk mencoba lagi.");
                                             scanner.nextLine();
                                         }
                                     }
                                 }
                             }
-                            case 0 -> loopingBuku = false; // Loop diberhentikan karena program telah selesai
-                            // Dalam scanner next int, bila kita inputkan karakter selain angka, maka hasil yang keluar adalah -1(error)
+                            case 0 -> loopingBuku = false;
                             case -1 -> {
                                 System.out.println("Maaf! Input pilihan user harus berupa angka! Untuk mencoba lagi, silahkan tekan enter.");
-                                scanner.nextLine(); // Fungsinya untuk menghapus buffer
+                                scanner.nextLine();
                             }
-                            // Menampilkan pesan kesalahan untuk pilihan yang tidak valid misal angka 5 keatas
                             default -> {
                                 System.out.println("Maaf menu, tidak tersedia, silahkan tekan enter untuk mencoba lagi.");
                                 scanner.nextLine();
@@ -114,7 +113,7 @@ public class Library {
                         }
                     }
                 }
-                // Case 2 untuk memilih menu barang
+                // Case 2 untuk memilih menu manajemen anggota
                 case 2 -> {
                     boolean loopingAnggota = true;
                     while (loopingAnggota) {
@@ -131,9 +130,9 @@ public class Library {
                             }
                             case 3 -> {
                                 System.out.println("Anda memilih menu untuk melihat anggota yang masih aktif. Berikut datanya : ");
-                                listAnggota(member); // Memanggil fungsi list anggota
+                                listAnggota(member); // Memanggil fungsi lihat list anggota
                             }
-                            case 0 -> loopingAnggota = false;
+                            case 0 -> loopingAnggota = false; // Keluar dari menu manajemen anggota
                             case -1 -> {
                                 System.out.println("Maaf! Input pilihan user harus berupa angka! Untuk mencoba lagi, silahkan tekan enter.");
                                 scanner.nextLine();
@@ -145,8 +144,7 @@ public class Library {
                         }
                     }
                 }
-                // Keluar dari aplikasi
-                case 0 -> {
+                case 0 -> { // Keluar dari aplikasi
                     System.out.println("Anda memilih untuk keluar dari aplikasi.");
                     System.out.println("Terimakasih atas waktunya.");
                     System.out.println("==================================================================================================================================");
@@ -162,10 +160,9 @@ public class Library {
                 }
             }
         }
-        scanner.close();
+        scanner.close(); // Menutup scanner agar menghindari kebocoran sumber daya data
     }
-
-    private static void tampilkanMenu() {
+    private static void tampilkanMenu() { // Menampilkan menu utama
         System.out.println("==================================================================================================================================");
         System.out.println("Berikut adalah beberapa menu tindakan yang tersedia, silahkan pilih sesuai nomor.");
         System.out.println("1. Manajemen Buku");
@@ -174,8 +171,7 @@ public class Library {
         System.out.println("==================================================================================================================================");
         System.out.print("Pilihan Anda (0-2) : ");
     }
-
-    private static void tampilkanBuku() {
+    private static void tampilkanBuku() { // Menampilkan menu manajemen buku
         System.out.println("==================================================================================================================================");
         System.out.println("Berikut adalah beberapa menu di manajemen buku yang tersedia, silahkan pilih sesuai nomor.");
         System.out.println("1. Tambah Buku");
@@ -187,8 +183,7 @@ public class Library {
         System.out.println("==================================================================================================================================");
         System.out.print("Pilihan Anda (0-5) : ");
     }
-
-    private static void tampilkanLihatBuku() {
+    private static void tampilkanLihatBuku() { // Menampilkan menu lihat buku
         System.out.println("==================================================================================================================================");
         System.out.println("Berikut adalah beberapa menu di menu lihat buku yang tersedia, silahkan pilih sesuai nomor.");
         System.out.println("1. Lihat buku yang tersedia");
@@ -199,8 +194,7 @@ public class Library {
         System.out.println("==================================================================================================================================");
         System.out.print("Pilihan Anda (0-4) : ");
     }
-
-    private static void tampilkanAnggota() {
+    private static void tampilkanAnggota() { // Menampilkan menu manajemen anggota
         System.out.println("==================================================================================================================================");
         System.out.println("Berikut adalah beberapa menu di manajemen anggota yang tersedia, silahkan pilih sesuai nomor.");
         System.out.println("1. Tambah Anggota");
@@ -210,7 +204,6 @@ public class Library {
         System.out.println("==================================================================================================================================");
         System.out.print("Pilihan Anda (0-3) : ");
     }
-
     // Fungsi untuk mendapatkan pilihan user
     private static int getPilihanUser(Scanner scanner) {
         int pilihanUser;
@@ -224,7 +217,7 @@ public class Library {
         }
         return pilihanUser;
     }
-
+    // Fungsi untuk menampilkan semua buku yang tersedia
     private static void listBuku(List<Book> books) {
         System.out.println("No\tJudul\t\t\t\t\t\t\t\t\t\t\t\t|Penulis\t\t\t\t\t\t\t\t|ISBN");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
@@ -234,12 +227,13 @@ public class Library {
             String isbn = books.get(indeksBuku).getIsbn();
             String statusBuku = books.get(indeksBuku).getStatusBuku();
             int jumlah = books.get(indeksBuku).getJumlah();
+            // Hanya status yang aktif dan jumlah yang bernilai 1, yang data nya akan ditampilkan. Aktif untuk data yang tidak terhapus dan 1 untuk buku yang tidak dipinjam. Begitupun sebaliknya.
             if (statusBuku.equalsIgnoreCase("aktif") && jumlah == 1) {
                 System.out.printf("%d.\t%s\t\t\t\t\t\t\t\t|%s\t\t\t\t\t\t\t|%s\n", indeksBuku + 1, judul, penulis, isbn);
             }
         }
     }
-
+    // Fungsi untuk menampilkan semua buku yang sedang dipinjam
     private static void listBukuPinjam(List<Book> books) {
         boolean dataExist = false; // Setel awalnya ke false karena belum ada data yang ditemukan
         System.out.println("No\tJudul\t\t\t\t\t\t\t\t\t\t\t\t|Penulis\t\t\t\t\t\t\t\t|ISBN");
@@ -250,39 +244,46 @@ public class Library {
             String isbn = books.get(indeksBuku).getIsbn();
             String statusBuku = books.get(indeksBuku).getStatusBuku();
             int jumlah = books.get(indeksBuku).getJumlah();
+            // Fungsinya hanya untuk menampilkan data yang tidak terhapus(aktif) dan buku yang sedang dipinjam(0)
             if (statusBuku.equalsIgnoreCase("aktif")) {
                 if (jumlah == 0) {
                     System.out.printf("%d.\t%s\t\t\t\t\t\t\t\t|%s\t\t\t\t\t\t\t|%s\n", indeksBuku + 1, judul, penulis, isbn);
-                    dataExist = true;
+                    dataExist = true; // Bila data ditemukan, maka akan diset nilainya menjadi true
                 }
             }
         }
-        if (!dataExist) {
+        if (!dataExist) { // Bila data tidak ditemukan, maka akan memberikan informasi data tidak ada
             System.out.println("Mohon maaf data buku yang dipinjam belum tersedia. Silahkan pinjam buku terlebih dahulu.");
         }
     }
-
+    // Fungsi untuk menampilkan jumlah berdasarkan nama buku
     private static void listJumlahBuku(List<Book> books) {
+        // Menampilkan header untuk tabel
         System.out.println("No\tJudul\t\t\t\t\t\t\t\t\t\t\t\t|Penulis\t\t\t\t\t\t\t\t|Jumlah");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
 
+        // Inisialisasi daftar untuk menyimpan informasi unik tentang judul, penulis, dan jumlah buku
         List<String> uniqueJuduls = new ArrayList<>();
         List<String> penulisJuduls = new ArrayList<>();
         List<Integer> judulJumlahs = new ArrayList<>();
 
+        // Iterasi melalui daftar buku
         for (Book book : books) {
             String judul = book.getJudul();
             String penulis = book.getPenulis();
             String statusBuku = book.getStatusBuku();
             int jumlah = book.getJumlah();
 
+            // Memproses hanya buku dengan status "aktif"
             if (statusBuku.equalsIgnoreCase("aktif")) {
                 judul = judul.trim();
 
+                // Memeriksa apakah judul buku sudah ada dalam daftar unik
                 if (uniqueJuduls.contains(judul)) {
                     int index = uniqueJuduls.indexOf(judul);
-                    judulJumlahs.set(index, judulJumlahs.get(index) + jumlah);
+                    judulJumlahs.set(index, judulJumlahs.get(index) + jumlah); // Menambahkan jumlah buku jika judul sudah ada
                 } else {
+                    // Menambahkan judul, penulis, dan jumlah buku baru ke dalam daftar
                     uniqueJuduls.add(judul);
                     penulisJuduls.add(penulis);
                     judulJumlahs.add(jumlah);
@@ -290,21 +291,21 @@ public class Library {
             }
         }
 
+        // Menampilkan informasi buku yang dihitung
         for (int indeksBuku = 0; indeksBuku < uniqueJuduls.size(); indeksBuku++) {
             String judul = uniqueJuduls.get(indeksBuku);
             String penulis = penulisJuduls.get(indeksBuku);
             int jumlah = judulJumlahs.get(indeksBuku);
 
+            // Menampilkan baris informasi buku jika jumlahnya lebih dari 0
             if (jumlah > 0) {
                 System.out.printf("%d.\t%s\t\t\t\t\t\t\t\t|%s\t\t\t\t\t\t\t|%d\n", indeksBuku + 1, judul, penulis, jumlah);
             }
         }
     }
-
-
-
+    // Fungsi untuk menampilkan histori keluar masuk buku
     private static void historyBook(List<String> history) {
-        if (history.size() != 0) {
+        if (history.size() != 0) { // Jika data history tidak ada, maka akan memberikan informasi bahwa data tidak ada
             for (int indeksBuku = 0; indeksBuku < history.size(); indeksBuku++) {
                 System.out.printf("%d.\t%s\n", indeksBuku+1, history.get(indeksBuku));
             }
@@ -312,7 +313,7 @@ public class Library {
             System.out.println("Mohon maaf, data history tidak tersedia. Silahkan lakukan terlebih dahulu peminjaman dan pengembalian buku.");
         }
     }
-
+    // Fungsinya untuk menampilkan semua data anggota yang ada
     private static void listAnggota(List<Anggota> member) {
         System.out.println("No\tID Anggota\t\t\t|Nama");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
@@ -320,32 +321,32 @@ public class Library {
             String idAnggota = member.get(indeksAnggota).getIdAnggota();
             String nama = member.get(indeksAnggota).getNama();
             String statusAnggota = member.get(indeksAnggota).getStatusAnggota();
-            if (statusAnggota.equalsIgnoreCase("aktif")) {
+            if (statusAnggota.equalsIgnoreCase("aktif")) { // Menampilkan hanya anggota yang berstatus aktif saja(anggota tidak dihapus)
                 System.out.printf("%d.\t%s\t\t\t\t|%s\n", indeksAnggota + 1, idAnggota, nama);
             }
         }
     }
-
+    // Fungsinya untuk menambahkan buku baru ke list books
     private static void tambahBukuBaru(Scanner scanner, List<Book> books) {
         boolean bukuLooping = false;
-        while (!bukuLooping) {
+        while (!bukuLooping) { // Looping untuk menambahkan buku baru
             System.out.print("Silahkan inputkan judul buku : ");
             String judulBaru = scanner.nextLine();
             System.out.print("Silahkan inputkan penulis buku : ");
             String penulisBaru = scanner.nextLine();
             boolean isbnValid = false;
             String isbnSpasi = "";
-            while (!isbnValid) {
+            while (!isbnValid) { // Looping untuk inputan isbn bila isbn diinputkan selain 13 digit angka dan juga jika isbn sudah ada di data buku
                 System.out.print("Silahkan inputkan ISBN buku (13 digit) : ");
                 String isbn = scanner.nextLine();
-                if (isbn.equalsIgnoreCase("keluar")) {
+                if (isbn.equalsIgnoreCase("keluar")) { // Kembali ke menu, bila pengguna tidak ingin melanjutkan inputan
                     bukuLooping = true;
                     break;
                 } else {
-                    isbnSpasi = isbn.replaceAll("\\s", "");
-                    if (!isbnSpasi.matches("^[0-9]{13}$")) {
+                    isbnSpasi = isbn.replaceAll("\\s", ""); // Bila inputan ada spasi, maka spasi akan dihilangkan
+                    if (!isbnSpasi.matches("^[0-9]{13}$")) { // Jika inputan isbn bukan berupa 13 digit angka, maka akan diberikan pesan kesalahan
                         System.out.println("Mohon maaf, input ISBN tidak boleh " + isbnSpasi.length() + " digit. Dan input ISBN harus berupa 13 digit angka. Silahkan coba kembali. Untuk kembali ke menu, silahkan ketik `keluar`.");
-                    } else {
+                    } else { // Jika inputan isbn sudah benar, maka isbn akan diformat dari seoerti ini 9786545636789 menjadi seperti ini 978-654-5636-78-9
                         StringBuilder formatted = new StringBuilder();
                         formatted.append(isbnSpasi.substring(0, 3)).append("-");
                         formatted.append(isbnSpasi.substring(3, 6)).append("-");
@@ -354,21 +355,20 @@ public class Library {
                         formatted.append(isbnSpasi.substring(12, 13));
                         isbnSpasi = formatted.toString();
 
-                        boolean bookExist = cekBuku(books, isbnSpasi);
-
-                        if (bookExist) {
+                        boolean bookExist = cekBuku(books, isbnSpasi); // Memanggil fungsi cek buku untuk untuk mengecek apakah buku sudah ada atau belum di database
+                        if (bookExist) { // Jika ada, maka akan diberikan pesan kesalahan dan pengguna diminta untuk menginputkan kembali isbn yang baru
                             System.out.println("Maaf, kode seri buku (ISBN) sudah ada. Silahkan inputkan ISBN yang baru. Untuk kembali ke menu, silahkan ketik `keluar`.");
                             isbnValid = false;
-                        } else {
-                            tambahBuku(books, judulBaru, penulisBaru, isbnSpasi, 1, "aktif");
+                        } else { // Jika tidak, maka data2 yang sudah diinputkan pengguna sebelumnya akan dimasukkan pada database books
+                            tambahBuku(books, judulBaru, penulisBaru, isbnSpasi, 1, "aktif"); // Memanggil fungsi tambah buku
                             System.out.println("Selamat! Anda berhasil menambahkan buku baru. Berikut update datanya : ");
-                            listBuku(books);
-                            isbnValid = true;
+                            listBuku(books); // Memanggil fungsi lihat buku
+                            isbnValid = true; // Inputan isbn tidak akan di loop kembali karena inputan sudah benar
 
-                            System.out.print("Apakah Anda ingin menambahkan buku baru lagi (y/n) ? "); // Menanyakan pengguna apakah ingin menambahkan barang
+                            System.out.print("Apakah Anda ingin menambahkan buku baru lagi (y/n) ? "); // Menanyakan pengguna apakah ingin menambahkan buku baru lagi?
                             String pilihanPengguna = scanner.nextLine();
                             if (!pilihanPengguna.equalsIgnoreCase("y")) {
-                                bukuLooping = true;
+                                bukuLooping = true; // Jika pilihan pengguna selain y, maka looping tambah buku baru akan dihentikan
                             }
                         }
                     }
@@ -376,40 +376,40 @@ public class Library {
             }
         }
     }
-
+    // Fungsinya untuk menambahkan anggota baru ke data member
     private static void tambahAnggotaBaru(Scanner scanner, List<Anggota> member) {
         boolean loopAnggota = false;
-        while (!loopAnggota) {
+        while (!loopAnggota) { // Looping untuk menambahkan anggota baru
             System.out.print("Silahkan inputkan nama anggota : ");
             String namaBaru = scanner.nextLine();
-            String idAnggota = generateIdAnggota(namaBaru);
+            String idAnggota = generateIdAnggota(namaBaru); // Memanggil fungsi untuk mengenerate id sesuai dengan nama anggota yang diinputkan
 
-            tambahAnggota(member, idAnggota, namaBaru, "aktif");
+            tambahAnggota(member, idAnggota, namaBaru, "aktif"); // Menambahkan anggota baru ke database member
             System.out.println("Selamat! Anda berhasil menambahkan anggota baru. Berikut update datanya : ");
-            listAnggota(member);
-            System.out.print("Apakah Anda ingin menambahkan anggota baru lagi (y/n) ? "); // Menanyakan pengguna apakah ingin menambahkan barang
+            listAnggota(member); // Memanggil fungsi lihat anggota
+            System.out.print("Apakah Anda ingin menambahkan anggota baru lagi (y/n) ? "); // Menanyakan pengguna apakah ingin menambahkan anggota lagi?
             String pilihanPengguna = scanner.nextLine();
             if (!pilihanPengguna.equalsIgnoreCase("y")) {
-                loopAnggota = true;
+                loopAnggota = true; // Jika pilihan pengguna selain y, maka looping tambah anggota baru akan dihentikan
             }
         }
     }
-
+    // Fungsinya untuk menyimpan variabel runningNumber agar bisa di loop-kan
     private static int runningNumber = 4;
-
+    // Fungsinya untuk generate kode secara otomatis sesuai nama yang diinputkan pengguna
     private static String generateIdAnggota(String namaAnggota) {
-        String kodeHuruf = namaAnggota.substring(0, Math.min(3, namaAnggota.length())).toUpperCase();
-        String generateIdAnggota = kodeHuruf + runningNumber;
-        runningNumber++;
+        String kodeHuruf = namaAnggota.substring(0, Math.min(3, namaAnggota.length())).toUpperCase(); // Fungsinya untuk mengambil 3 huruf didepan kata nama(dan merubahnya menjadi uppercase)
+        String generateIdAnggota = kodeHuruf + runningNumber; // Menambahkan kode huruf dan running number
+        runningNumber++; // Menambah 1 running number setiap selesai generate kode
 
-        return generateIdAnggota;
+        return generateIdAnggota; // Mengembalikan hasil
     }
-
+    // Fungsinya untuk menghapus buku di database dengan cara set status menjadi tidak aktif(soft delete)
     private static void hapusBuku(Scanner scanner, List<Book> books) {
         boolean hapusValid = false;
         boolean errorMessage = false;
-        while (!hapusValid) {
-            listBuku(books);
+        while (!hapusValid) { // Looping inputan bila terjadi hapus buku yang tidak ada
+            listBuku(books); // Memanggil fungsi lihat buku
             System.out.print("Silahkan inputkan no buku yang ingin dihapus : ");
             String pilihanHapus = scanner.nextLine();
 
@@ -417,20 +417,20 @@ public class Library {
                 break;
             } else {
                 for (int indeksBuku = 0; indeksBuku < books.size(); indeksBuku++) {
-                    if (pilihanHapus.matches("^[0-9]+$")) {
+                    if (pilihanHapus.matches("^[0-9]+$")) { // Jika pengguna  menginputkan angka, maka data yang dihapus akan dicari berdasarkan index buku
                         int indexBuku = Integer.parseInt(pilihanHapus);
-                        if (indexBuku - 1 == indeksBuku) {
-                            books.get(indeksBuku).setStatusBuku("tidak aktif");
-                            hapusValid = true;
-                            errorMessage = false;
-                            System.out.println("Selamat! Buku berhasil terhapus. Berikut update datanya : ");
-                            listBuku(books);
+                        if (indexBuku - 1 == indeksBuku) { // Mengecek apakah inputan pengguna sama dengan data yang ada di database
+                            books.get(indeksBuku).setStatusBuku("tidak aktif"); // Set status buku untuk metode soft delete
+                            hapusValid = true; // Loop input akan berhenti karena data sudah sesuai
+                            errorMessage = false; // Pesan kesalahan tidak akan ditampilkan karena data sudah sesuai
+                            System.out.println("Selamat! Buku berhasil terhapus. Berikut update datanya : "); // Menampilkan pesan berhasil
+                            listBuku(books); // Memanggil fungsi lihat buku
                             break;
-                        } else {
+                        } else { // Bila inputan pengguna tidak cocok dengan data yang di database, maka akan menampilkan pesan kesalahan
                             errorMessage = true;
                         }
                     } else {
-                        if (books.get(indeksBuku).getJudul().equalsIgnoreCase(pilihanHapus)) {
+                        if (books.get(indeksBuku).getJudul().equalsIgnoreCase(pilihanHapus)) { // Mengecek apakah inputan pengguna sama dengan data yang ada di database
                             books.get(indeksBuku).setStatusBuku("tidak aktif");
                             hapusValid = true;
                             errorMessage = false;
@@ -443,18 +443,24 @@ public class Library {
                     }
                 }
 
-                if (errorMessage) {
+                if (errorMessage) { // Menampilkan pesan kesalahan bila error message = true
                     System.out.println("Maaf, buku belum tersedia. Silahkan pilih buku yang sudah ada. Untuk kembali ke menu, silahkan ketik `keluar`.");
+                }
+
+                System.out.print("Apakah Anda ingin menghapus buku lagi (y/n) ? "); // Menanyakan pengguna apakah ingin menghapus buku lagi?
+                String pilihanPengguna = scanner.nextLine();
+                if (pilihanPengguna.equalsIgnoreCase("y")) {
+                    hapusValid = false; // Jika pilihan pengguna merupakan y, maka looping hapus buku akan dilanjutkan
                 }
             }
         }
     }
-
+    // Fungsinya untuk menghapus anggota di database dengan cara set status menjadi tidak aktif(soft delete)
     private static void hapusAnggota(Scanner scanner, List<Anggota> member) {
         boolean hapusValid = false;
         boolean errorMessage = false;
-        while (!hapusValid) {
-            listAnggota(member);
+        while (!hapusValid) { // Looping inputan bila terjadi hapus anggota yang tidak ada
+            listAnggota(member); // Memanggil fungsi lihat anggota
             System.out.print("Silahkan inputkan no anggota yang ingin dihapus : ");
             String pilihanHapus = scanner.nextLine();
 
@@ -462,19 +468,20 @@ public class Library {
                 break;
             } else {
                 for (int indeksAnggota = 0; indeksAnggota < member.size(); indeksAnggota++) {
-                    if (pilihanHapus.matches("^[0-9]+$")) {
+                    if (pilihanHapus.matches("^[0-9]+$")) { // Jika pengguna  menginputkan angka, maka data yang dihapus akan dicari berdasarkan index anggota
                         int indexAnggota = Integer.parseInt(pilihanHapus);
-                        if (indexAnggota - 1 == indeksAnggota) {
-                            member.get(indeksAnggota).setStatusAnggota("tidak aktif");
-                            hapusValid = true;
-                            errorMessage = false;
-                            System.out.println("Selamat! Anggota berhasil terhapus. Berikut update datanya : ");
-                            listAnggota(member);
+                        if (indexAnggota - 1 == indeksAnggota) { // Mengecek apakah inputan pengguna sama dengan data yang ada di database
+                            member.get(indeksAnggota).setStatusAnggota("tidak aktif"); // Set status anggota untuk metode soft delete
+                            hapusValid = true; // Loop input akan berhenti karena data sudah sesuai
+                            errorMessage = false; // Pesan kesalahan tidak akan ditampilkan karena data sudah sesuai
+                            System.out.println("Selamat! Anggota berhasil terhapus. Berikut update datanya : "); // Menampilkan pesan berhasil
+                            listAnggota(member); // Memanggil fungsi lihat anggota
                             break;
-                        } else {
+                        } else { // Bila inputan pengguna tidak cocok dengan data yang di database, maka akan menampilkan pesan kesalahan
                             errorMessage = true;
                         }
                     } else {
+                        // Mengecek apakah inputan pengguna sama dengan data yang ada di database
                         if (member.get(indeksAnggota).getNama().equalsIgnoreCase(pilihanHapus) || member.get(indeksAnggota).getIdAnggota().equalsIgnoreCase(pilihanHapus)) {
                             member.get(indeksAnggota).setStatusAnggota("tidak aktif");
                             hapusValid = true;
@@ -488,13 +495,19 @@ public class Library {
                     }
                 }
 
-                if (errorMessage) {
+                if (errorMessage) { // Menampilkan pesan kesalahan bila error message = true
                     System.out.println("Maaf, nama anggota tidak ada dalam data. Silahkan pilih nama anggota yang sudah ada. Untuk kembali ke menu, silahkan ketik `keluar`.");
+                }
+
+                System.out.print("Apakah Anda ingin menghapus anggota lagi (y/n) ? "); // Menanyakan pengguna apakah ingin menghapus anggota lagi?
+                String pilihanPengguna = scanner.nextLine();
+                if (pilihanPengguna.equalsIgnoreCase("y")) {
+                    hapusValid = false; // Jika pilihan pengguna merupakan y, maka looping hapus anggota akan dilanjutkan
                 }
             }
         }
     }
-
+    // Fungsinya untuk mengecek apakah anggota ada atau tidak
     private static boolean cekAnggota(List<Anggota> member, String idAnggota) {
         boolean anggotaExist = false;
         for (int indeksAnggota = 0; indeksAnggota < member.size(); indeksAnggota++) {
@@ -506,7 +519,7 @@ public class Library {
         }
         return anggotaExist;
     }
-
+    // Fungsinya untuk mengecek apakah buku ada atau tidak
     private static boolean cekBuku(List<Book> books, String isbnSpasi) {
         boolean bookExist = false;
         for (int indeksBuku = 0; indeksBuku < books.size(); indeksBuku++) {
@@ -518,37 +531,34 @@ public class Library {
         }
         return bookExist;
     }
-
+    // Fungsinya untuk membuat format waktu sekarang menyesuaikan dengan waktu Indonesia
     private static String formatWaktu() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
         // Membuat objek SimpleDateFormat dengan timezone Asia/Jakarta dan locale Indonesia
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", new Locale("id", "ID"));
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
-
         // Memformat Timestamp menjadi tanggal Indonesia
         String formattedDate = sdf.format(timestamp);
-
         // Menampilkan hasilnya
         return formattedDate;
     }
-
+    // Fungsinya untuk meminjam buku di perpustakaan
     private static void pinjamBuku(Scanner scanner, List<Book> books, List<Anggota> member, List<String> history) {
         boolean loopPinjam = false;
-        while (!loopPinjam) {
-            listBuku(books);
+        while (!loopPinjam) { // Looping untuk peminjaman buku lagi
+            listBuku(books); // Memanggil fungsi lihat buku yang tersedia
             boolean idAnggotaValid = false;
-            while (!idAnggotaValid) {
+            while (!idAnggotaValid) { // Looping untuk inputan id anggota
                 System.out.print("Silahkan inputkan id anggota peminjam : ");
                 String idAnggota = scanner.nextLine();
                 if (idAnggota.equalsIgnoreCase("keluar")) {
                     loopPinjam = true;
                     break;
                 } else {
-                    boolean anggotaExist = cekAnggota(member, idAnggota);
-                    if (anggotaExist) {
+                    boolean anggotaExist = cekAnggota(member, idAnggota); // Memanggil fungsi cek anggota
+                    if (anggotaExist) { // Jika anggota ada dalam data, maka program akan dilanjutlan pada input isbn
                         boolean isbnValid = false;
-                        while (!isbnValid) {
+                        while (!isbnValid) { // Looping untuk inputan isbn buku
                             System.out.print("Silahkan inputkan ISBN buku yang ingin dipinjam(hanya angka) : ");
                             String isbn = scanner.nextLine();
 
@@ -557,10 +567,10 @@ public class Library {
                                 loopPinjam = true;
                                 break;
                             } else {
-                                String isbnSpasi = isbn.replaceAll("\\s", "");
-                                if (!isbnSpasi.matches("^[0-9]{13}$")) {
+                                String isbnSpasi = isbn.replaceAll("\\s", ""); // Bila inputan ada spasi, maka spasi akan dihilangkan
+                                if (!isbnSpasi.matches("^[0-9]{13}$")) { // Jika inputan isbn bukan berupa 13 digit angka, maka akan diberikan pesan kesalahan
                                     System.out.println("Mohon maaf, input ISBN tidak boleh " + isbnSpasi.length() + " digit. Dan input ISBN harus berupa 13 digit angka. Silahkan coba kembali. Untuk kembali ke menu, silahkan ketik `keluar`.");
-                                } else {
+                                } else { // Jika inputan isbn sudah benar, maka isbn akan diformat dari seoerti ini 9786545636789 menjadi seperti ini 978-654-5636-78-9
                                     StringBuilder formatted = new StringBuilder();
                                     formatted.append(isbnSpasi.substring(0, 3)).append("-");
                                     formatted.append(isbnSpasi.substring(3, 6)).append("-");
@@ -570,30 +580,31 @@ public class Library {
                                     isbnSpasi = formatted.toString();
                                     isbnValid = true;
 
-                                    boolean bookExist = cekBuku(books, isbnSpasi);
-                                    if (bookExist) {
+                                    boolean bookExist = cekBuku(books, isbnSpasi); // Memanggil fungsi cek buku
+                                    if (bookExist) { // Jika buku ada, maka buku bisa dipinjam
                                         boolean validJumlah = false;
                                         for (int indeksBuku = 0; indeksBuku < books.size(); indeksBuku++) {
                                             String cekIsbn = books.get(indeksBuku).getIsbn();
                                             int cekJumlah = books.get(indeksBuku).getJumlah();
-                                            if (cekIsbn.equalsIgnoreCase(isbnSpasi) && cekJumlah == 1) {
+                                            if (cekIsbn.equalsIgnoreCase(isbnSpasi) && cekJumlah == 1) { // Cek apakah buku ada dan jumlah == 1(tidak dipinjamkan)
                                                 String judul = books.get(indeksBuku).getJudul();
                                                 int jumlah = books.get(indeksBuku).getJumlah();
-                                                int kalkulasi = jumlah - 1;
-                                                books.get(indeksBuku).setJumlah(kalkulasi);
+                                                int kalkulasi = jumlah - 1; // Jumlah akan dikurangkan 1 agar jumlah menjadi 0(dipinjamkan)
+                                                books.get(indeksBuku).setJumlah(kalkulasi); // Set jumlah menjadi 0
                                                 for (int indeksMember = 0; indeksMember < member.size(); indeksMember++) {
                                                     if (idAnggota.equalsIgnoreCase(member.get(indeksMember).getIdAnggota())) {
                                                         String namaMember = member.get(indeksMember).getNama();
+                                                        // Menambahkan history bahwa buku dipinjamkan
                                                         history.add("Buku " + judul + " sedang dipinjam oleh " + namaMember + " di tanggal " + formatWaktu() + ".");
                                                         break;
                                                     }
                                                 }
-                                                System.out.println("Selamat! Anda berhasil meminjam buku " + judul + " di perpustakaan ini.");
+                                                System.out.println("Selamat! Anda berhasil meminjam buku " + judul + " di perpustakaan ini."); // Menampilkan pesan keberhasilan
                                                 validJumlah = true;
                                                 break;
                                             }
                                         }
-                                        if (!validJumlah) {
+                                        if (!validJumlah) { // Menampilkan pesan kesalahan bila jumlah nya 0(sedang dipinjam)
                                             System.out.println("Mohon maaf buku ini sedang dipinjam.");
                                         }
                                         System.out.print("Apakah Anda ingin meminjam buku lagi (y/n) ? "); // Menanyakan pengguna apakah ingin meminjam buku lagi?
@@ -605,7 +616,7 @@ public class Library {
                                         }
                                     } else {
                                         System.out.println("Mohon maaf buku dengan ISBN " + isbnSpasi + " tidak ada dalam data. Silahkan inputkan data yang sudah ada. Jika ingin kembali ke menu, ketik `keluar`.");
-                                        isbnValid = false;
+                                        isbnValid = false; // Melakukan looping input isbn, karena pengguna salah input isbn
                                     }
                                 }
                             }
@@ -617,13 +628,13 @@ public class Library {
             }
         }
     }
-
+    // Fungsinya untuk mengembalikan buku di perpustakaan
     private static void pengembalianBuku(Scanner scanner, List<Book> books, List<String> history) {
         boolean loopKembali = false;
-        while (!loopKembali) {
-            listBukuPinjam(books);
+        while (!loopKembali) { // Looping untuk pengembalian buku lagi
+            listBukuPinjam(books); // Memanggil fungsi lihat buku yang dipinjam
             boolean isbnValid = false;
-            while (!isbnValid) {
+            while (!isbnValid) { // Looping untuk inputan isbn buku
                 System.out.print("Silahkan inputkan ISBN buku yang ingin dipinjam(hanya angka) : ");
                 String isbn = scanner.nextLine();
 
@@ -631,10 +642,10 @@ public class Library {
                     loopKembali = true;
                     break;
                 } else {
-                    String isbnSpasi = isbn.replaceAll("\\s", "");
-                    if (!isbnSpasi.matches("^[0-9]{13}$")) {
+                    String isbnSpasi = isbn.replaceAll("\\s", ""); // Bila inputan ada spasi, maka spasi akan dihilangkan
+                    if (!isbnSpasi.matches("^[0-9]{13}$")) { // Jika inputan isbn bukan berupa 13 digit angka, maka akan diberikan pesan kesalahan
                         System.out.println("Mohon maaf, input ISBN tidak boleh " + isbnSpasi.length() + " digit. Dan input ISBN harus berupa 13 digit angka. Silahkan coba kembali. Untuk kembali ke menu, silahkan ketik `keluar`.");
-                    } else {
+                    } else { // Jika inputan isbn sudah benar, maka isbn akan diformat dari seperti ini 9786545636789 menjadi seperti ini 978-654-5636-78-9
                         StringBuilder formatted = new StringBuilder();
                         formatted.append(isbnSpasi.substring(0, 3)).append("-");
                         formatted.append(isbnSpasi.substring(3, 6)).append("-");
@@ -644,27 +655,28 @@ public class Library {
                         isbnSpasi = formatted.toString();
                         isbnValid = true;
 
-                        boolean bookExist = cekBuku(books, isbnSpasi);
-                        if (bookExist) {
+                        boolean bookExist = cekBuku(books, isbnSpasi); // Memanggil fungsi cek buku
+                        if (bookExist) { // Jika buku ada, maka buku bisa dipinjam
                             boolean cekPinjam = true;
                             for (int indeksBuku = 0; indeksBuku < books.size(); indeksBuku++) {
                                 String cekIsbn = books.get(indeksBuku).getIsbn();
                                 int jumlah = books.get(indeksBuku).getJumlah();
-                                if (cekIsbn.equalsIgnoreCase(isbnSpasi)) {
-                                    if (jumlah == 0) {
+                                if (cekIsbn.equalsIgnoreCase(isbnSpasi)) { // Cek apakah isbn nya sama dengan data yang ada
+                                    if (jumlah == 0) { // Cek apakah buku sedang dipinjamkan atau tidak
                                         String judul = books.get(indeksBuku).getJudul();;
-                                        int kalkulasi = jumlah + 1;
-                                        books.get(indeksBuku).setJumlah(kalkulasi);
+                                        int kalkulasi = jumlah + 1; // Jika buku sedang dipinjamkan, maka jumlah ditambah 1 agar nilainya menjadi 1
+                                        books.get(indeksBuku).setJumlah(kalkulasi); // Set jumlah buku menjadi 1(buku sudah tersedia lagi/buku sudah dikembalikan)
+                                        // Menambahkan history bahwa buku sudah dikembalikan
                                         history.add("Buku " + judul + " sudah dikembalikan" + " di tanggal " + formatWaktu() + ".");
-                                        System.out.println("Selamat! Anda berhasil mengambalikan buku " + judul + " ke perpustakaan ini.");
+                                        System.out.println("Selamat! Anda berhasil mengambalikan buku " + judul + " ke perpustakaan ini."); // Menampilkan pesan keberhasilan
                                         cekPinjam = true;
-                                    } else {
+                                    } else { // Menampilkan bahwa buku dengan inputan isbn pengguna tidak sedang dipinjamkan, pengguna diminta untuk input ulang isbn
                                         cekPinjam = false;
                                         isbnValid = false;
                                     }
                                 }
                             }
-                            if (cekPinjam == false) {
+                            if (cekPinjam == false) { // Menampilkan pesan kesalahan bahwa buku tidak sedang dipinjamkan
                                 System.out.println("Mohon maaf buku ini tidak dipinjamkan.  Silahkan inputkan buku yang sedang dipinjam. Jika ingin kembali ke menu, ketik `keluar`.");
                             }
                             System.out.print("Apakah Anda ingin mengembalikan buku lagi (y/n) ? "); // Menanyakan pengguna apakah ingin meminjam buku lagi?
@@ -673,7 +685,7 @@ public class Library {
                                 loopKembali = true;
                                 break;
                             }
-                        } else {
+                        } else { // Menampilkan pesan kesalahan apabila isbn tidak sesuai dengan isbn yang ada di database, dan pengguna diminta untuk inputkan kembali isbn
                             System.out.println("Mohon maaf buku dengan ISBN " + isbnSpasi + " tidak ada dalam data. Silahkan inputkan data yang sudah ada. Jika ingin kembali ke menu, ketik `keluar`.");
                             isbnValid = false;
                         }

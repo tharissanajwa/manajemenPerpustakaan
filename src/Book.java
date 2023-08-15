@@ -1,10 +1,13 @@
+// Model untuk buku, dengan berisi judul, penulis, isbn, jumlah, dan status buku. Dan ini adalah contoh encapsulation
 public class Book {
+    // Deklarasi variabel
     private String judul;
     private String penulis;
     private String isbn;
     private int jumlah;
     private String statusBuku;
 
+    // Fungsinya untuk menambahkan data ke database
     public Book(String judul, String penulis, String isbn, int jumlah, String statusBuku) {
         this.judul = judul;
         this.penulis = penulis;
@@ -13,28 +16,17 @@ public class Book {
         this.statusBuku = statusBuku;
     }
 
+    // Getter untuk judul, penulis, isbn, jumlah, dan status buku. Setter untuk jumlah dan status buku.
     public String getJudul() {
         return judul;
-    }
-
-    public void setJudul(String judul) {
-        this.judul = judul;
     }
 
     public String getPenulis() {
         return penulis;
     }
 
-    public void setPenulis(String penulis) {
-        this.penulis = penulis;
-    }
-
     public String getIsbn() {
         return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public int getJumlah() {
